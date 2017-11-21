@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+    <head>
+ <title> The NYC OUTLET </title>
+ <script>
+    function RemoveCartItem (item){ 
+    var ItemId = 'CartItem'+item;
+    var RemoveId ='RemoveItem'+item;
+    var obj = document.getElementById(ItemId);
+    obj.parentNode.removeChild(obj);
+    obj= document.getElementById(RemoveId);
+    obj.parentNode.removeChild(obj);
+    }
+    function AddRemoveObject (itemToRemove){
+        var TheCartItemRemove = document.getElementById('cartItemRemove');
+        var TheRemoveDiv = document.createElement('div');
+        var TheRemoveImage = document.createElement('img');
+        TheRemoveDiv.id = 'RemoveItem'+itemToRemove;
+        TheRemoveImage.src= "remove.jpeg";
+        TheRemoveImage.height = 25;
+        TheRemoveImage.onclick = function() {RemoveCartItem(itemToRemove);};
+        TheRemoveDiv.appendChild(TheRemoveImage);
+        TheCartItemRemove.appendChild(TheRemoveDiv);
+    }
+     function ShowCartItems(){
+	var TheCartItems = document.getElementById('cartItemImages');
+    var TheCartItemRemove = document.getElementById('cartItemRemove');
+    var TheRemoveNodeList = TheCartItemRemove.getElementsByTagName('div');
+    var TheImageNodeList = TheCartItems.getElementsByTagName('div');
+    for (i = 0; i<TheImageNodeList.length;i++){
+        TheImageNodeList[i].style.position = "absolute";
+        TheImageNodeList[i].style.top = (200 * i)+"px";
+        TheImageNodeList[i].style.left = (0)+"px";
+        TheRemoveNodeList[i].style.position = "absolute";
+        TheRemoveNodeList[i].style.top = (200 * i)+50+"px";
+        TheRemoveNodeList[i].style.left = (0)+"px";
+    }
+}
+     function FindIfIdExists (obj, id) {
+       var TheNodeList = obj.getElementsByTagName('div');
+       for (NodeNumber = 0; NodeNumber<TheNodeList.length;NodeNumber++){
+           if(TheNodeList[NodeNumber].id === id) {
+               return NodeNumber + 1;
+           }
+       }
+       return 0 ;
+     }
+     function ContinueShopping(){
+         document.getElementById('products').style.visibility='visible';
+         document.getElementById('TheCart').style.visibility='hidden';
+          document.getElementById('THENYCOUTLET').style.visibility='visible';
+     }
+    function AddToCart(itemToAdd) {
+      var TheCartItemImages= document.getElementById('cartItemImages');
+      var foundNodeCount = FindIfIdExists(TheCartItemImages,"CartItem"+itemToAdd);
+      if( foundNodeCount === 0 ) {
+       var TheCartItemToAdd = document.getElementById(itemToAdd).cloneNode(true);
+       TheCartItemToAdd.id = "CartItem"+itemToAdd;
+       TheCartItemToAdd.childNodes[1].height=100;
+       TheCartItemImages.appendChild(TheCartItemToAdd);
+       AddRemoveObject(itemToAdd);
+      }
+	ShowCartItems();
+       document.getElementById('products').style.visibility='hidden';
+       document.getElementById('TheCart').style.visibility='visible';
+       document.getElementById('THENYCOUTLET').style.visibility='hidden';
+   }
+     </script>
+
+</head>
+<body>
+
+<div id ='THENYCOUTLET' style='visibility: visible'>
+      <div style = "position:absolute; font-size:44pt; left:50px; top: 5px">
+       THE NYC OUTLET 
+  </div> 
+  <div id ="products" style='visibility: visible'>
+      <div id="001" data-price="42.00" style = "position:absolute; left:200px; top:150px">
+      <img src="001.jpg" height="230">
+      <span> Quantity > </span>
+      <input type="text" id="qty1" placeholder= "Enter Quantity">
+      <p> Versace Eros Cologone For Men<br>
+  </div>
+      <div style = "position:absolute;left:200px; top:450px">
+      <img src="addtocart.jpg" height="43" onclick='AddToCart("001")'>
+      </div>
+    <div style = "position:absolute;  font-size:18pt; left:425px; top: 455px">
+    $42.00
+</div>
+<div id="002" data-price="55.00" style = "position:absolute; left:600px; top:150px">
+	<img src="002.jpg" height="230">
+    <span> Quantity > </span>
+      <input type="text" id="qty1" placeholder= "Enter Quantity">
+    <p> Gucci Guilty Cologone For Men<br>
+</div>
+<div style = "position:absolute;left:600px; top:450px">
+<img src="addtocart.jpg" height="43" onclick='AddToCart("002")'>
+</div>
+<div style = "position:absolute; font-size:18pt; left:825px; top:455px">
+$55.00
+</div>
+<div id="003" data-price="80.00" style = "position:absolute; left:1000px; top:150px">
+	<img src="003.jpg" height="230">
+    <span> Quantity > </span>
+      <input type="text" id="qty1" placeholder= "Enter Quantity">
+    <p> Paco Rabanne Cologone For Men<br>
+</div>
+<div style = "position:absolute; left:1000px; top:450px">
+<img src="addtocart.jpg" height="43" onclick='AddToCart("003")'>
+</div>
+<div style = "position:absolute; font-size:18pt; left:1225px; top: 455px">
+$80.00
+</div>
+  <div id ='TheCart' style='visibility: hidden'>
+      <div style = "position:absolute; font-size:44pt; left:50px; top: 5px">
+       The Cart 
+  </div> 
+  <div style = "position:absolute; left:475px; top: 50px">
+       <img src="ctnshopping.jpg" height="43" onclick='ContinueShopping()'>
+
+ 
+  </div>
+  <div id="cartItemImages" style="position:absolute; left:75px; top: 150px"></div>
+  <div id="cartItemRemove" style="position:absolute; left:200px; top: 150px"></div>
+   <div id="cartItemPrice" style="position:absolute; left:250px; top: 150px"></div>
+  <div id="cartItemQuantity" style="position:absolute; left:300px; top: 150px"></div>
+  <div id="cartItemTotal" style="position:absolute; left:350px; top: 155px"></div>
+  <div id="cartTotal" style="position:absolute; left:350px; top: 125px"> Order Total</div>
+
+ </div>
+  <div id="ThankYouForYourOrder" style='visibility: hidden; font-size: 144pt'>
+      Thank You For Your Order
+  </div>
+</body>
+</html>
